@@ -1,15 +1,25 @@
 function fibonacci(num) {
-  if (num === 0) {
-    return 0;
-  } else if (num === 1) {
-    return 1;
-  } else {
-    let fib = [0, 1];
-    for (let i = 2; i <= num; i++) {
-      fib.push(fib[i - 1] + fib[i - 2]);
+  if (num === 0) return 0;
+  if (num === 1) return 1;
+
+  // Use memoization to store previously computed Fibonacci numbers
+  const memo = new Map();
+  memo.set(0, 0);
+  memo.set(1, 1);
+
+  // Helper function to calculate the Fibonacci number
+  function fib(n) {
+    if (memo.has(n)) {
+      return memo.get(n);
+    } else {
+      const fibN = fib(n - 1) + fib(n - 2);
+      memo.set(n, fibN);
+      return fibN;
     }
-    return fib[num];
   }
+
+  return fib(num);
+   
 }
 
 module.exports = fibonacci;
